@@ -7,10 +7,13 @@
     "start": "webpack-dev-server --content-base src --inline --hot"
   },
   "dependencies": {
+    "axios": "^0.15.3",
+    "material-ui": "^0.17.0",
     "mobx": "^2.3.7",
     "mobx-react": "^3.5.1",
     "react": "^15.2.1",
-    "react-dom": "^15.3.0"
+    "react-dom": "^15.3.0",
+    "react-tap-event-plugin": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",

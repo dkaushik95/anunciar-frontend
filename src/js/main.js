@@ -1,10 +1,18 @@
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import "../css/main.css"
 import React from "react"
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ReactDOM from "react-dom"
 
-import TodoList from "./TodoList"
-import store from "./TodoStore"
+import AnunciarComponent from "./components/AnunciarComponent"
+import sessionStore from "./stores/SessionStore"
+import announcementStore from "./stores/AnnouncementStore"
 
+const App = () =>(
+    <MuiThemeProvider>
+        <AnunciarComponent sessionStore={sessionStore} announcementStore={announcementStore} />
+    </MuiThemeProvider>
+)
 const app = document.getElementById('app')
-
-ReactDOM.render(<TodoList store={store} />, app)
+injectTapEventPlugin();
+ReactDOM.render(<App />, app)

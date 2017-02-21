@@ -12,6 +12,6 @@ class TodoStore {
     }
 }
 
-var store = window.store = new TodoStore
+var store = new TodoStore
 
 export default store
