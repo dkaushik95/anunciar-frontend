@@ -5,12 +5,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ReactDOM from "react-dom"
 
 import AnunciarComponent from "./components/AnunciarComponent"
-import sessionStore from "./stores/SessionStore"
-import announcementStore from "./stores/AnnouncementStore"
+import anunciarStore from "./stores/AnunciarStore"
 
 const App = () =>(
     <MuiThemeProvider>
-        <AnunciarComponent sessionStore={sessionStore} announcementStore={announcementStore} />
+        <AnunciarComponent anunciarStore={anunciarStore} />
     </MuiThemeProvider>
 )
 const app = document.getElementById('app')

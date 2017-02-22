@@ -40,32 +40,32 @@ export default class AnunciarHeader extends React.Component {
     login(){
         var email = document.getElementById('email').value
         var password = document.getElementById('password').value
-        this.props.sessionStore.login(email, password)
+        this.props.anunciarStore.login(email, password)
         this.handleClose()
     }
 
     logout(){
-        this.props.sessionStore.logout()
+        this.props.anunciarStore.logout()
         this.handleClose()
     }
     render(){
-        var loading = this.props.sessionStore.processing ? <CircularProgress color='#fff' size={30} /> : <div></div>
-        var snackBar = this.props.sessionStore.errors ? <Snackbar
+        var loading = this.props.anunciarStore.processing ? <CircularProgress color='#fff' size={30} /> : <div></div>
+        var snackBar = this.props.anunciarStore.errors ? <Snackbar
                       open={true}
                       message='Error Logging you in! Please check your credentials'
                       autoHideDuration={4000}
                     /> : <div></div>
-        if(this.props.sessionStore.isLoggedIn == 'true'){
+        if(this.props.anunciarStore.isLoggedIn == 'true'){
             const actions = [
               <FlatButton
                 label="Logout"
                 primary={true}
+                disabled={!this.props.anunciarStore.isOnline}
                 keyboardFocused={true}
                 onTouchTap={this.logout.bind(this)}
               />,
             ];
-            var { user } = this.props.sessionStore
-            var label = user.role + " " + user.email
+            var { user } = this.props.anunciarStore
 
             return <div>
                 <AppBar
@@ -74,9 +74,8 @@ export default class AnunciarHeader extends React.Component {
                     iconElementRight={<div>
                         {loading}
                         <IconButton
-                        tooltip={this.props.sessionStore.user.email}
+                        tooltip={this.props.anunciarStore.user.email}
                         tooltipPosition="bottom-left"
-                        label={label}
                         style={style}
                         onTouchTap={this.handleOpen.bind(this)}>
                             <AccountCircle color='#fff' />
@@ -91,7 +90,7 @@ export default class AnunciarHeader extends React.Component {
                       onRequestClose={this.handleClose.bind(this)}
                     >
                       <h1> {user.email} </h1>
-                      <h2> {user.role} </h2>
+                      <h7> {user.role} </h7>
                     </Dialog>
                     {snackBar}
             </div>
@@ -102,6 +101,7 @@ export default class AnunciarHeader extends React.Component {
                 label="Login"
                 primary={true}
                 keyboardFocused={true}
+                disabled={!this.props.anunciarStore.isOnline}
                 onTouchTap={this.login.bind(this)}
               />,
             ];

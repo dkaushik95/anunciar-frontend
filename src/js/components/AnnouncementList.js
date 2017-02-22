@@ -1,28 +1,26 @@
 import React from "react"
 import { observer } from "mobx-react"
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
+import AnnouncementListItem from './AnnouncementListItem'
 
 @observer
 export default class AnnouncementList extends React.Component {
+    componentDidMount(){
+      if(this.props.anunciarStore.isOnline){
+        this.props.anunciarStore.getAnnouncements()
+      }
+    }
     render(){
-        return <Card>
-            <CardHeader
-              title="Without Avatar"
-              subtitle="Subtitle"
-              actAsExpander={true}
-              showExpandableButton={true}
-            />
-            <CardActions>
-              <FlatButton label="Action1" />
-              <FlatButton label="Action2" />
-            </CardActions>
-            <CardText expandable={true}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-            </CardText>
-          </Card>
+        var {announcements} = this.props.anunciarStore
+        var ListItems = announcements.map(function(currentVal){
+          return <AnnouncementListItem key={currentVal.id} announcement={currentVal} />
+        })
+        return <div style={{
+              maxWidth: 800,
+              margin: '1 auto',
+              paddingTop: 20
+            }}>
+          {ListItems}
+        </div>
     }
 }

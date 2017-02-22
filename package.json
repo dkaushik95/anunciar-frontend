@@ -8,13 +8,15 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "countdown": "^2.6.0",
     "material-ui": "^0.17.0",
     "mobx": "^2.3.7",
     "mobx-react": "^3.5.1",
     "normalize.css": "^5.0.0",
     "react": "^15.2.1",
     "react-dom": "^15.3.0",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "time-ago": "^0.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
