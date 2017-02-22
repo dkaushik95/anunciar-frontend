@@ -8,7 +8,7 @@ export default class AnunciarComponent extends React.Component {
     render(){
         return <div>
             <AnunciarHeader sessionStore={this.props.sessionStore} />
-            <AnnouncementComponent announcementStore={this.props.announcementStore} />
+            <AnnouncementComponent announcementStore={this.props.announcementStore} sessionStore={this.props.sessionStore} />
         </div>
     }
 }

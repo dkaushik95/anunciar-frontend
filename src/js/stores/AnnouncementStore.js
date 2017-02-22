@@ -1,17 +1,25 @@
-import { computed, observable } from 'mobx'
+import { observable } from 'mobx'
+import sessionStore from './SessionStore'
+import axios from 'axios'
 
-class TodoStore {
-    @observable todos = ["buy milk", "buy eggs"]
-    @observable filter = ""
-    @computed get filteredTodos(){
-        var matchesFilter = new RegExp(this.filter, "i")
-        return this.todos.filter(todo => !this.filter || matchesFilter.test(todo))
+
+class AnnouncementStore {
+    @observable announcements
+    @observable processing = false
+    getAnnouncements(){
+        console.log('GETTING ANNOUNCEMENTS')
+        this.processing = true
+        axios.get()
     }
-    createTodo(value){
-        this.todos.push(value)
+    updateInfo(){
+        this.announcements = localStorage.getItem('announcements')
+    }
+
+    logout(){
+        this.announcements = localStorage.setItem('announcements', null)
     }
 }
 
-var store = new TodoStore
+var announcementStore = new AnnouncementStore
 
-export default store
+export default announcementStore

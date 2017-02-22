@@ -16,7 +16,7 @@ const style = {
   margin: 0,
 }
 const buttonStyle ={
-    paddingTop: 6,
+    padding: 6,
 }
 
 @observer
