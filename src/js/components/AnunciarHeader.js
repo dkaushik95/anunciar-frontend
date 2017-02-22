@@ -19,10 +19,12 @@ const buttonStyle ={
     padding: 6,
 }
 
+// observer decoration is used to re-render the components whenever any value on the props is changed from the Store.
 @observer
 export default class AnunciarHeader extends React.Component {
     constructor(){
         super()
+        //open is for the Dialog to show or hide
         this.state = {
             open: false,
         }
@@ -36,7 +38,7 @@ export default class AnunciarHeader extends React.Component {
     handleClose() {
         this.setState({open: false});
     }
-
+    // call the login function by passing the email and value to the store
     login(){
         var email = document.getElementById('email').value
         var password = document.getElementById('password').value
@@ -55,6 +57,7 @@ export default class AnunciarHeader extends React.Component {
                       message='Error Logging you in! Please check your credentials'
                       autoHideDuration={4000}
                     /> : <div></div>
+        // I dont know how to change the value of online when the device actually goes offline It only knows about that state when the page refreshes.
         if(this.props.anunciarStore.isLoggedIn == 'true'){
             const actions = [
               <FlatButton

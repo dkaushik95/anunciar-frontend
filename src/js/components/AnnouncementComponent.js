@@ -3,6 +3,7 @@ import { observer } from "mobx-react"
 import AnnouncementList from "./AnnouncementList"
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 
+// If the user is logged in, show the announcements, else show a card which describes the application
 @observer
 export default class AnnouncementComponent extends React.Component {
     render(){
