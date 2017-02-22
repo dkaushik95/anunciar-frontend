@@ -7,11 +7,16 @@ import IconButton from 'material-ui/IconButton'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
-import CircularProgress from 'material-ui/CircularProgress';
+import CircularProgress from 'material-ui/CircularProgress'
+import Snackbar from 'material-ui/Snackbar'
+import AccountCircle from 'material-ui/svg-icons/action/account-circle'
 
 
 const style = {
-  margin: 12,
+  margin: 0,
+}
+const buttonStyle ={
+    paddingTop: 6,
 }
 
 @observer
@@ -38,13 +43,18 @@ export default class AnunciarHeader extends React.Component {
         this.props.sessionStore.login(email, password)
         this.handleClose()
     }
+
     logout(){
         this.props.sessionStore.logout()
         this.handleClose()
-
     }
     render(){
-        var loading = this.props.sessionStore.processing ? <CircularProgress /> : <div></div>
+        var loading = this.props.sessionStore.processing ? <CircularProgress color='#fff' size={30} /> : <div></div>
+        var snackBar = this.props.sessionStore.errors ? <Snackbar
+                      open={true}
+                      message='Error Logging you in! Please check your credentials'
+                      autoHideDuration={4000}
+                    /> : <div></div>
         if(this.props.sessionStore.isLoggedIn == 'true'){
             const actions = [
               <FlatButton
@@ -60,12 +70,17 @@ export default class AnunciarHeader extends React.Component {
             return <div>
                 <AppBar
                     title={<span>Anunciar</span>}
-                    iconElementLeft={<IconButton><Announcement /></IconButton>}
-                    iconElementRight={<RaisedButton
+                    iconElementLeft={<IconButton><Announcement /> </IconButton>}
+                    iconElementRight={<div>
+                        {loading}
+                        <IconButton
+                        tooltip={this.props.sessionStore.user.email}
+                        tooltipPosition="bottom-left"
                         label={label}
-                        primary={true}
                         style={style}
-                        onTouchTap={this.handleOpen.bind(this)}/>}
+                        onTouchTap={this.handleOpen.bind(this)}>
+                            <AccountCircle color='#fff' />
+                        </IconButton></div>}
                   />
 
                   <Dialog
@@ -76,9 +91,9 @@ export default class AnunciarHeader extends React.Component {
                       onRequestClose={this.handleClose.bind(this)}
                     >
                       <h1> {user.email} </h1>
-                      <h1> {user.role} </h1>
-                      {loading}
+                      <h2> {user.role} </h2>
                     </Dialog>
+                    {snackBar}
             </div>
         }
         else{
@@ -94,13 +109,17 @@ export default class AnunciarHeader extends React.Component {
                 <AppBar
                     title={<span>Anunciar</span>}
                     iconElementLeft={<IconButton><Announcement /></IconButton>}
-                    iconElementRight={<RaisedButton
+                    iconElementRight={
+                        <div>
+                        {loading}
+                        <FlatButton
                         label="Login"
-                        primary={true}
-                        style={style}
-                        onTouchTap={this.handleOpen.bind(this)}/>}
+                        primary={false}
+                        labelStyle={{color:'white'}}
+                        style={buttonStyle}
+                        onTouchTap={this.handleOpen.bind(this)}/>
+                        </div>}
                   />
-
                   <Dialog
                       title="Login"
                       actions={actions}
@@ -119,8 +138,8 @@ export default class AnunciarHeader extends React.Component {
                           type="password"
                           id='password'
                         /><br />
-                        {loading}
                     </Dialog>
+                    {snackBar}
             </div>
         }
     }

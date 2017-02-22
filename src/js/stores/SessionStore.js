@@ -4,14 +4,10 @@ import axios from 'axios'
 class SessionStore {
     @observable user = JSON.parse(sessionStorage.getItem('user'))
     @observable isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'))
-    @observable errors = JSON.parse(sessionStorage.getItem('userErrors'))
+    @observable errors = false
     @observable processing = false
     constructor(){
         this.updateInfo()
-    }
-    @computed get filteredTodos(){
-        var matchesFilter = new RegExp(this.filter, "i")
-        return this.todos.filter(todo => !this.filter || matchesFilter.test(todo))
     }
     login(email, password){
         //put a login request, change loading variable and process the response
@@ -31,12 +27,15 @@ class SessionStore {
             sessionStorage.setItem('user', userd)
             sessionStorage.setItem('isLoggedIn', true)
             this.updateInfo()
+            this.errors = false
             this.processing = false
         })
         .catch((error) =>{
             //show errors and show the change
             window.error = error
             console.log('ERROR: ' + error)
+            this.errors = true
+            this.updateInfo()
             this.processing = false
         })
     }
@@ -50,13 +49,13 @@ class SessionStore {
         sessionStorage.setItem('user', null)
         sessionStorage.setItem('isLoggedIn', false)
         this.updateInfo()
+        this.errors = false
         this.processing = false
         //remove all the files from sessionStore and change update the changes
     }
     updateInfo(){
         this.user = JSON.parse(sessionStorage.getItem('user'))
         this.isLoggedIn = sessionStorage.getItem('isLoggedIn')
-        this.errors = JSON.parse(sessionStorage.getItem('userErrors'))
     }
 }
 
