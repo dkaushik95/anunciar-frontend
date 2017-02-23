@@ -1,9 +1,7 @@
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import "../css/main.css"
 import React from "react"
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ReactDOM from "react-dom"
-
 import AnunciarComponent from "./components/AnunciarComponent"
 import anunciarStore from "./stores/AnunciarStore"
 
@@ -18,4 +16,20 @@ const App = () =>(
 const app = document.getElementById('app')
 //This line is for the touch events to work for material-ui plugin
 injectTapEventPlugin();
+
+// ENABLE THIS AFTER DEVELOPMENT IS COMPLETE
+if('serviceWorker' in navigator){
+    navigator.serviceWorker
+        .register('./service-worker.js')
+        .then((r) =>{
+            console.log('Service worker enabled' + r)
+        })
+        .catch((e) =>{
+            console.log('Service worker failed' + e)
+        })
+}
+else{
+    console.log('No service worker')
+}
+
 ReactDOM.render(<App />, app)

@@ -18,19 +18,33 @@ const style = {
 const buttonStyle ={
     padding: 6,
 }
-
-// observer decoration is used to re-render the components whenever any value on the props is changed from the Store.
+const customContentStyle = {
+  maxWidth: '800px',
+  width: '100%'
+};
 @observer
 export default class AnunciarHeader extends React.Component {
     constructor(){
         super()
-        //open is for the Dialog to show or hide
         this.state = {
             open: false,
+            signUpopen: false
         }
     }
 
-
+    signup(){
+      var email = document.getElementById('signup_email').value
+      var password = document.getElementById('signup_password').value
+      var passwordConfirmation = document.getElementById('signup_passwordConfirmation').value
+      var username = document.getElementById('signup_username').value
+      if(password != passwordConfirmation){
+        alert('passwords must match')
+      }
+      else{
+        this.props.anunciarStore.signup(email, username, password, passwordConfirmation)
+        this.handlesignUpClose()
+      }
+    }
     handleOpen() {
         this.setState({open: true});
     }
@@ -38,7 +52,6 @@ export default class AnunciarHeader extends React.Component {
     handleClose() {
         this.setState({open: false});
     }
-    // call the login function by passing the email and value to the store
     login(){
         var email = document.getElementById('email').value
         var password = document.getElementById('password').value
@@ -50,14 +63,19 @@ export default class AnunciarHeader extends React.Component {
         this.props.anunciarStore.logout()
         this.handleClose()
     }
+    handleSignUpOpen(){
+      this.setState({signUpopen: true})
+    }
+    handlesignUpClose(){
+      this.setState({signUpopen: false})
+    }
     render(){
         var loading = this.props.anunciarStore.processing ? <CircularProgress color='#fff' size={30} /> : <div></div>
         var snackBar = this.props.anunciarStore.errors ? <Snackbar
                       open={true}
-                      message='Error Logging you in! Please check your credentials'
+                      message={this.props.anunciarStore.error + " Error. Please try again"}
                       autoHideDuration={4000}
                     /> : <div></div>
-        // I dont know how to change the value of online when the device actually goes offline It only knows about that state when the page refreshes.
         if(this.props.anunciarStore.isLoggedIn == 'true'){
             const actions = [
               <FlatButton
@@ -89,16 +107,27 @@ export default class AnunciarHeader extends React.Component {
                       title="Hello!"
                       actions={actions}
                       modal={false}
+                      contentStyle={customContentStyle}
+                      autoScrollBodyContent={true}
                       open={this.state.open}
                       onRequestClose={this.handleClose.bind(this)}
                     >
-                      <h1> {user.email} </h1>
+                      <h3> {user.email} </h3>
                       <h7> {user.role} </h7>
                     </Dialog>
                     {snackBar}
             </div>
         }
         else{
+            const signUpactions = [
+              <FlatButton
+                label="Sign up"
+                primary={true}
+                keyboardFocused={true}
+                disabled={!this.props.anunciarStore.isOnline}
+                onTouchTap={this.signup.bind(this)}
+                />,
+            ]
             const actions = [
               <FlatButton
                 label="Login"
@@ -121,12 +150,20 @@ export default class AnunciarHeader extends React.Component {
                         labelStyle={{color:'white'}}
                         style={buttonStyle}
                         onTouchTap={this.handleOpen.bind(this)}/>
+                        <FlatButton
+                        label="Sign Up"
+                        primary={false}
+                        labelStyle={{color:'white'}}
+                        style={buttonStyle}
+                        onTouchTap={this.handleSignUpOpen.bind(this)}/>
                         </div>}
                   />
                   <Dialog
                       title="Login"
                       actions={actions}
                       modal={false}
+                      contentStyle={customContentStyle}
+                      autoScrollBodyContent={true}
                       open={this.state.open}
                       onRequestClose={this.handleClose.bind(this)}
                     >
@@ -141,6 +178,40 @@ export default class AnunciarHeader extends React.Component {
                           type="password"
                           id='password'
                         /><br />
+                    </Dialog>
+                    <Dialog
+                      title="Sign Up"
+                      actions={signUpactions}
+                      modal={false}
+                      contentStyle={customContentStyle}
+                      autoScrollBodyContent={true}
+                      open={this.state.signUpopen}
+                      onRequestClose={this.handlesignUpClose.bind(this)}
+                    >
+                      <TextField
+                          hintText="example@example.com"
+                          floatingLabelText="Email"
+                          id='signup_email'
+                        /><br />
+                      <TextField
+                          hintText="shhhh"
+                          floatingLabelText="Password"
+                          type="password"
+                          id='signup_password'
+                        /><br />
+                      <TextField
+                        hintText="password confirmation"
+                        floatingLabelText="Again"
+                        type='password'
+                        id='signup_passwordConfirmation'
+                        />
+                        <br />
+                        <TextField
+                          hintText='we will use this in our future builds'
+                          floatingLabelText='Username'
+                          type='text'
+                          id='signup_username'
+                        />
                     </Dialog>
                     {snackBar}
             </div>

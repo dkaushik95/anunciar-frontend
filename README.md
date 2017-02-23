@@ -5,7 +5,6 @@ Front end of Anunciar with react.js
 # Anunciar-Frontend
 
 Front end of Anunciar with react.js
-fgffg
 To run the app locally:
 
 ```bash
@@ -16,9 +15,9 @@ npm start
 open http://localhost:8080
 ```
 
-## Credentials you will need 
-* ADMIN 
-  * email: 'admin@example.co m'         
+## Credentials you will need
+* ADMIN
+  * email: 'admin@example.com'
   * password: 'secret'
 
 * STUDENT

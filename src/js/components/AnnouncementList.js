@@ -13,10 +13,6 @@ const style = {
   },
 };
 
-// here is the problem, when I login, there is an error which is called that while it is performing the AJAX request for the
-// announcement, it checks for the announcement whose value is null, so I get an error, I have resolved the issue for now by
-// showing the RefreshIndicator, but I cannot call the getAnnouncement function which exists on the Store to get my data.
-
 @observer
 export default class AnnouncementList extends React.Component {
     componentDidMount(){
@@ -40,8 +36,6 @@ export default class AnnouncementList extends React.Component {
                   status="loading"
                   style={style.refresh}
                 />
-          // this.props.anunciarStore.getAnnouncements()
-          // No can do!
         }
         return <div style={{
               maxWidth: 800,

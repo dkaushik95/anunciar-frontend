@@ -7,16 +7,16 @@ import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker';
 
-
-
-
-
 const style = {
     position: 'fixed',
     bottom: 10,
     right: 10
 }
 
+const customContentStyle = {
+  width: '100%',
+  maxWidth: 'none',
+};
 
 @observer
 export default class AnunciarComponent extends React.Component {
@@ -27,14 +27,12 @@ export default class AnunciarComponent extends React.Component {
       }
     }
     addAnnouncement(){
-      //TODO add announcement
-      var title = document.getElementById('title')
-      var description = document.getElementById('description')
-      var deadline = document.getElementById('deadline')
-      var tags = document.getElementById('tags')
+      var title = document.getElementById('title_field').value
+      var description = document.getElementById('description_field').value
+      var deadline = document.getElementById('deadline_field').value
+      var tags = document.getElementById('tags_field').value
       this.props.anunciarStore.addAnnouncement(title, description, deadline, tags)
       this.handleClose()
-
     }
     showAddDialog(){
       this.setState({
@@ -56,44 +54,43 @@ export default class AnunciarComponent extends React.Component {
               />,
             ];
         return <div>
-                    <FloatingActionButton
-                    secondary={true}
-                    style={style}
-                    onClick={this.showAddDialog.bind(this)}
-                    disabled={!this.props.anunciarStore.isOnline} >
-                        <ContentAdd  />
-                    </FloatingActionButton>
-                    <Dialog
-                      title="Add announcement"
-                      actions={actions}
-                      modal={false}
-                      open={this.state.open}
-                      onRequestClose={this.handleClose.bind(this)}
-                    >
-                        {//Add announcement component, need to move this
-                        }
-                      <TextField
-                          hintText="This is the title"
-                          floatingLabelText="Title"
-                          id='title'
-                        /><br />
-                      <TextField
-                        hintText="Add a description of the announcement"
-                        floatingLabelText="Description"
-                        multiLine={true}
-                        rows={3}
-                        id='description'
-                      /><br />
+            <FloatingActionButton
+              secondary={true}
+              style={style}
+              onClick={this.showAddDialog.bind(this)}
+              disabled={!this.props.anunciarStore.isOnline} >
+              <ContentAdd  />
+            </FloatingActionButton>
+            <Dialog
+              title="Add announcement"
+              actions={actions}
+              modal={false}
+              contentStyle={customContentStyle}
+              autoScrollBodyContent={true}
+              open={this.state.open}
+              onRequestClose={this.handleClose.bind(this)}
+              >
+                <TextField
+                  hintText="This is the title"
+                  floatingLabelText="Title"
+                  id='title_field'
+                  /><br />
+                <TextField
+                  hintText="Add a description of the announcement"
+                  floatingLabelText="Description"
+                  multiLine={true}
+                  rows={3}
+                  id='description_field'
+                  /><br />
 
-                      <DatePicker hintText="Deadline" /><br />
+                <DatePicker hintText="Deadline" id='deadline_field'/><br />
 
-                      <TextField
-                          hintText="Eg. Submission, presentation, etc."
-                          floatingLabelText="Tags"
-                          id='tags'
-                        /><br />
-
-                    </Dialog>
-                </div>
+                <TextField
+                  hintText="Eg. Submission, presentation, etc."
+                  floatingLabelText="Tags"
+                  id='tags_field'
+                  /><br />
+            </Dialog>
+          </div>
     }
 }

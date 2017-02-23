@@ -11,10 +11,6 @@ const style = {
     right: 10
 }
 
-// Three components here,
-// A header which holds the logic for login and logout and show the current user and its role
-// The Announcement Component which will contain the list of announcements
-// Ann FAB if the account which is logged is an admin, for adding new announcements.
 @observer
 export default class AnunciarComponent extends React.Component {
     render(){
