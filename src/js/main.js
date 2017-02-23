@@ -7,6 +7,7 @@ import ReactDOM from "react-dom"
 import AnunciarComponent from "./components/AnunciarComponent"
 import anunciarStore from "./stores/AnunciarStore"
 
+anunciarStore.updateInfo()
 //This is the main app component, all it is doing is taking the store from Aunciar and passing it to others as a prop.
 const App = () =>(
     //This is for theming the app. Will have to change this later.

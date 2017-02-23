@@ -34,6 +34,8 @@ export default class AnnouncementList extends React.Component {
         else{
           var ListItems = <RefreshIndicator
                   size={50}
+                  top={50}
+                  left={50}
                   loadingColor="#FF9800"
                   status="loading"
                   style={style.refresh}

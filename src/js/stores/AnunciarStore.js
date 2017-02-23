@@ -35,13 +35,14 @@ class AnunciarStore {
             }
             localStorage.setItem('user', userd)
             localStorage.setItem('isLoggedIn', true)
+            this.updateInfo()
             // as you are successfully logged in, get the announcements using the key.
             this.getAnnouncements()
         })
         .catch((error) =>{
-            //show errors and show the change
             console.log('ERROR: ' + error)
             this.errors = true
+            this.processing = false
             this.updateInfo()
 
         })
@@ -55,20 +56,19 @@ class AnunciarStore {
               'Authorization': JSON.parse(localStorage.getItem('user')).access_token
             }
           })
-          .then(function (response) {
+          .then((response) => {
             console.log(response);
             localStorage.setItem('announcements', JSON.stringify(response.data))
-            // this.updateInfo() doesnt work here, and so I get an error here.
+            this.updateInfo() // doesnt work here, and so I get an error here.
+            this.errors = false
+            this.processing = false
           })
-          .catch(function (error) {
-
+          .catch((error) => {
             console.log(error);
+            this.errors = true
             localStorage.setItem('announcementError', error.data)
             this.processing = false
           });
-            this.updateInfo()
-            this.errors = false
-            this.processing = false
     }
 
     updateInfo(){
@@ -91,6 +91,10 @@ class AnunciarStore {
         this.updateInfo()
         this.errors = false
         this.processing = false
+    }
+
+    addAnnouncement(title, description, deadline, tags){
+        console.log('Adding announcements from store actions')
     }
 }
 

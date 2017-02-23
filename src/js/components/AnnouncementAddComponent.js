@@ -5,6 +5,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
+import DatePicker from 'material-ui/DatePicker';
+
 
 
 
@@ -26,19 +28,23 @@ export default class AnunciarComponent extends React.Component {
     }
     addAnnouncement(){
       //TODO add announcement
-      console.log('addAnnouncement')
+      var title = document.getElementById('title')
+      var description = document.getElementById('description')
+      var deadline = document.getElementById('deadline')
+      var tags = document.getElementById('tags')
+      this.props.anunciarStore.addAnnouncement(title, description, deadline, tags)
+      this.handleClose()
+
     }
     showAddDialog(){
       this.setState({
         open: true
       })
-      console.log('showAddDialog')
     }
     handleClose(){
       this.setState({
         open: false
       })
-      console.log('')
     }
     render(){
         const actions = [
@@ -72,10 +78,21 @@ export default class AnunciarComponent extends React.Component {
                           id='title'
                         /><br />
                       <TextField
-                          hintText="shhhh"
-                          floatingLabelText="Password"
-                          id='description'
+                        hintText="Add a description of the announcement"
+                        floatingLabelText="Description"
+                        multiLine={true}
+                        rows={3}
+                        id='description'
+                      /><br />
+
+                      <DatePicker hintText="Deadline" /><br />
+
+                      <TextField
+                          hintText="Eg. Submission, presentation, etc."
+                          floatingLabelText="Tags"
+                          id='tags'
                         /><br />
+
                     </Dialog>
                 </div>
     }
