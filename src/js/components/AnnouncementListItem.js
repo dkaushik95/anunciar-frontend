@@ -8,6 +8,12 @@ import AddToCalendar from 'react-add-to-calendar'
 const style={
   margin: '3 auto'
 }
+
+const eventCalendarStyle ={
+  padding: 90,
+  width: '100 %',
+  margin: '1 auto'
+}
 @observer
 export default class AnnouncementListItem extends React.Component {
     render(){
@@ -38,6 +44,7 @@ export default class AnnouncementListItem extends React.Component {
               {announcement.deadline ? <AddToCalendar
                 buttonLabel= "Add to calendar"
                 event={event}
+                style={eventCalendarStyle}
                 buttonTemplate={icon}
                 listItems={items} /> : <div></div>}
 

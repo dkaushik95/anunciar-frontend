@@ -23,7 +23,8 @@ export default class AnnouncementComponent extends React.Component {
             />
 
             <CardText expandable={false}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga reiciendis natus dolor laudantium veniam necessitatibus error saepe tempore nobis rerum quos veritatis earum quidem itaque quis ducimus optio magnam suscipit, perspiciatis alias deleniti. At cum molestias quos autem illum voluptates eaque excepturi ad. Vero architecto maiores ipsa nobis blanditiis odio!
+                You are seeing this page because you are not logged in or signed up. Do so by clicking any of the buttons above.
+                And dont forget. Your app is now offline ready. Which means that you will never have to use more data for this app :)
             </CardText>
           </Card>
         )
