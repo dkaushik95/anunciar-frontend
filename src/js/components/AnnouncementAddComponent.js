@@ -74,12 +74,14 @@ export default class AnunciarComponent extends React.Component {
                   hintText="This is the title"
                   floatingLabelText="Title"
                   id='title_field'
+                  fullWidth={true}
                   /><br />
                 <TextField
                   hintText="Add a description of the announcement"
                   floatingLabelText="Description"
                   multiLine={true}
                   rows={3}
+                  fullWidth={true}
                   id='description_field'
                   /><br />
 
@@ -88,6 +90,7 @@ export default class AnunciarComponent extends React.Component {
                 <TextField
                   hintText="Eg. Submission, presentation, etc."
                   floatingLabelText="Tags"
+                  fullWidth={true}
                   id='tags_field'
                   /><br />
             </Dialog>

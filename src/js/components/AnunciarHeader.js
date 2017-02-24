@@ -170,12 +170,14 @@ export default class AnunciarHeader extends React.Component {
                       <TextField
                           hintText="example@example.com"
                           floatingLabelText="Email"
+                          fullWidth={true}
                           id='email'
                         /><br />
                       <TextField
                           hintText="shhhh"
                           floatingLabelText="Password"
                           type="password"
+                          fullWidth={true}
                           id='password'
                         /><br />
                     </Dialog>
@@ -191,18 +193,21 @@ export default class AnunciarHeader extends React.Component {
                       <TextField
                           hintText="example@example.com"
                           floatingLabelText="Email"
+                          fullWidth={true}
                           id='signup_email'
                         /><br />
                       <TextField
                           hintText="shhhh"
                           floatingLabelText="Password"
                           type="password"
+                          fullWidth={true}
                           id='signup_password'
                         /><br />
                       <TextField
                         hintText="password confirmation"
                         floatingLabelText="Again"
                         type='password'
+                        fullWidth={true}
                         id='signup_passwordConfirmation'
                         />
                         <br />
@@ -210,6 +215,7 @@ export default class AnunciarHeader extends React.Component {
                           hintText='we will use this in our future builds'
                           floatingLabelText='Username'
                           type='text'
+                          fullWidth={true}
                           id='signup_username'
                         />
                     </Dialog>

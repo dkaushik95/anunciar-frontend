@@ -31,6 +31,46 @@ self.addEventListener('activate', function(e){
     )
 })
 
+self.addEventListener('periodicSync', function(event){
+    if (event.registration.tag == 'get-latest-announcement') {
+        event.waitUntil(function(){
+            // ajax call !!
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+              if (this.readyState === 4) {
+                //Add response here !
+                var globalCount = JSON.parse(this.responseText).length
+                var localCount = JSON.parse(localStorage.getItem('announcements')).length
+                if(globalCount > localCount){
+                    console.log('[SERVICEWORKER] [BACKGROUNDSYNC] New announcements !!!')
+                      var options = {
+                          body: "You have " + (globalCount - localCount) + " new announcements!"
+                      }
+                      var n = new Notification("New notification from Anunciar",options);
+                      n.onshow = function(){
+                        console.log("Notification was shown")
+                      }
+                }
+                else{
+                    console.warn('[SERVICEWORKER] [BACKGROUNDSYNC] No new announcements!!!')
+                }
+                console.log(this.responseText);
+              }
+            });
+
+            xhr.open("GET", "http://anunciar-backend.herokuapp.com/v1/announcements");
+            xhr.setRequestHeader("authorization", JSON.parse(localStorage.getItem('user')).access_token);
+
+            xhr.send();
+        });
+    }
+    else {
+        event.registration.unregister();
+    }
+});
+
 self.addEventListener('fetch', function(e){
     console.log('[SERVICEWORKER] fetching!', e.request.url);
 

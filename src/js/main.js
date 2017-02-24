@@ -23,13 +23,44 @@ if('serviceWorker' in navigator){
         .register('./service-worker.js')
         .then((r) =>{
             console.log('Service worker enabled' + r)
+            r.periodicSync.register({
+                tag: 'get-latest-announcement',
+                minPeriod: 300000,
+                powerState: 'avoid-draining',
+                networkState: 'online'
+            }).then(function(periodicSyncReg){
+
+            }, function(){
+
+            })
         })
         .catch((e) =>{
             console.log('Service worker failed' + e)
+        })
+    navigator.serviceWorker.ready.then(function(registration) {
+      registration.periodicSync.permissionState().then(function(state) {
+        if (state == 'prompt') showSyncRegisterUI();
+      })
+    })
+
+    navigator.serviceWorker.ready.then(function(registration) {
+          registration.periodicSync.getRegistrations().then(function(syncRegs) {
+            syncRegs.filter(function(reg) {
+              return reg.tag != 'get-latest-announcement';
+            }).forEach(function(reg) {
+              reg.unregister();
+            })
+          })
         })
 }
 else{
     console.log('No service worker')
 }
+
+Notification.requestPermission().then(function(result) {
+  console.log(result);
+});
+
+
 
 ReactDOM.render(<App />, app)
