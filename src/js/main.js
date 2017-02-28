@@ -29,7 +29,7 @@ if('serviceWorker' in navigator){
                 powerState: 'avoid-draining',
                 networkState: 'online'
             }).then(function(periodicSyncReg){
-
+                console.log('[SERVICEWORKER] periodic sync registered ', periodicSyncReg)
             }, function(){
 
             })
@@ -57,10 +57,21 @@ else{
     console.log('No service worker')
 }
 
-Notification.requestPermission().then(function(result) {
-  console.log(result);
-});
 
+if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+}
+else{
+    try{
+        Notification.requestPermission().then(function(result) {
+          console.log(result);
+        })
+    }
+    catch(e){
+        console.log(e)
+    }
+
+}
 
 
 ReactDOM.render(<App />, app)
