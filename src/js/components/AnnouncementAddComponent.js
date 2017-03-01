@@ -48,7 +48,7 @@ export default class AnunciarComponent extends React.Component {
         const actions = [
               <FlatButton
                 label="Add"
-                primary={true}
+                secondary={true}
                 keyboardFocused={true}
                 onTouchTap={this.addAnnouncement.bind(this)}
               />,

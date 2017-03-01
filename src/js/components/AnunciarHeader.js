@@ -28,7 +28,8 @@ export default class AnunciarHeader extends React.Component {
         super()
         this.state = {
             open: false,
-            signUpopen: false
+            signUpopen: false,
+            calOpen: false
         }
     }
 
@@ -69,6 +70,18 @@ export default class AnunciarHeader extends React.Component {
     handlesignUpClose(){
       this.setState({signUpopen: false})
     }
+
+    handleOpenCal(){
+      this.setState({calOpen: true})
+    }
+
+    handleCalClose(){
+      this.setState({calOpen: false})
+    }
+
+    goToCal(){
+      window.open('https://calendar.google.com/calendar/embed?src=86u3c4vqkr7o5g07qd1pip0fd4%40group.calendar.google.com&ctz=Asia/Calcutta', '_blank');
+    }
     render(){
         var loading = this.props.anunciarStore.processing ? <CircularProgress color='#fff' size={30} /> : <div></div>
         var snackBar = this.props.anunciarStore.errors ? <Snackbar
@@ -80,7 +93,7 @@ export default class AnunciarHeader extends React.Component {
             const actions = [
               <FlatButton
                 label="Logout"
-                primary={true}
+                secondary={true}
                 disabled={!this.props.anunciarStore.isOnline}
                 keyboardFocused={true}
                 onTouchTap={this.logout.bind(this)}
@@ -91,7 +104,12 @@ export default class AnunciarHeader extends React.Component {
             return <div>
                 <AppBar
                     title={<span>Anunciar</span>}
-                    iconElementLeft={<IconButton><Announcement /> </IconButton>}
+                    iconElementLeft={
+                      <IconButton
+                        tooltip={'Time table is here!'}
+                        onTouchTap={this.handleOpenCal.bind(this)}
+                      ><Announcement /> </IconButton>
+                    }
                     iconElementRight={<div>
                         {loading}
                         <IconButton
@@ -115,6 +133,27 @@ export default class AnunciarHeader extends React.Component {
                       <h3> {user.email} </h3>
                       <h7> {user.role} </h7>
                     </Dialog>
+                  <Dialog
+                      title="Time-table"
+                      modal={false}
+                      contentStyle={customContentStyle}
+                      autoScrollBodyContent={true}
+                      open={this.state.calOpen}
+                      onRequestClose={this.handleCalClose.bind(this)}
+                    >
+                      <h3> Hello to Calendar! </h3>
+                      <br />
+                      <p> To get the time-table of the class use the link below to access it. You can click on the class that you are in and add it to your calendar. It is that simple. </p>
+                      <br />
+                      <br />
+                      <FlatButton
+                        label='Get your time-table'
+                        secondary='true'
+                        disabled={!this.props.anunciarStore.isOnline}
+                        keyboardFocused={true}
+                        onTouchTap={this.goToCal.bind(this)}
+                        />
+                    </Dialog>
                     {snackBar}
             </div>
         }
@@ -122,7 +161,7 @@ export default class AnunciarHeader extends React.Component {
             const signUpactions = [
               <FlatButton
                 label="Sign up"
-                primary={true}
+                secondary={true}
                 keyboardFocused={true}
                 disabled={!this.props.anunciarStore.isOnline}
                 onTouchTap={this.signup.bind(this)}
@@ -131,7 +170,7 @@ export default class AnunciarHeader extends React.Component {
             const actions = [
               <FlatButton
                 label="Login"
-                primary={true}
+                secondary={true}
                 keyboardFocused={true}
                 disabled={!this.props.anunciarStore.isOnline}
                 onTouchTap={this.login.bind(this)}
@@ -146,13 +185,13 @@ export default class AnunciarHeader extends React.Component {
                         {loading}
                         <FlatButton
                         label="Login"
-                        primary={false}
+                        secondary={true}
                         labelStyle={{color:'white'}}
                         style={buttonStyle}
                         onTouchTap={this.handleOpen.bind(this)}/>
                         <FlatButton
                         label="Sign Up"
-                        primary={false}
+                        secondary={true}
                         labelStyle={{color:'white'}}
                         style={buttonStyle}
                         onTouchTap={this.handleSignUpOpen.bind(this)}/>
